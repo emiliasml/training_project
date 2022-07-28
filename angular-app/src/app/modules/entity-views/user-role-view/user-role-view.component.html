@@ -1,0 +1,107 @@
+<h3>User Roles</h3>
+<div class="col-12">
+    <kendo-grid #userRoleGrid
+      [pageable]="true"
+      [sortable]="true"
+      [filterable]="true"
+      [data]="dataServiceData | async"
+      [pageSize]="state.take"
+      [skip]="state.skip"
+      [sort]="state.sort"
+      [filter]="state.filter"
+      [loading]="dataService?.pendingData"
+      (dataStateChange)="dataStateChange($event)"
+      (edit)="editHandler($event)"
+      (remove)="removeHandler($event)"
+      (add)="addHandler()"
+    >
+      <ng-template kendoGridToolbarTemplate>
+        <button kendoGridAddCommand>
+          <h5>Add a new User Role </h5>
+        </button>
+      </ng-template>
+      <kendo-grid-column field="RoleTypeId" title="RoleType">
+        <ng-template kendoGridCellTemplate let-dataItem>
+              {{ roleTypes(dataItem.RoleTypeId)?.Description }}
+            </ng-template>
+            <ng-template
+              kendoGridEditTemplate
+              let-dataItem="dataItem"
+              let-column="column"
+              let-formGroup="formGroup"
+            >
+          <kendo-dropdownlist
+            [defaultItem]="{ RoleType: '', Description: 'Choose a role type' }"
+            [data]="roleTypeList"
+            textField="Description"
+            valueField="RoleTypeId"
+            [valuePrimitive]="true"
+            [formControl]="formGroup.get('RoleTypeId')"
+          >
+          </kendo-dropdownlist>
+        </ng-template>
+        <ng-template kendoGridFilterCellTemplate let-filter>
+            <dropdown-filter
+              [filter]="state.filter"
+              [data]="roleTypeList"
+              textField="Description"
+              valueField="RoleTypeId"
+              [selectText]="selectTextRoleType"
+            >
+            </dropdown-filter>
+          </ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-column field="LibraryId" title="Library">
+        <ng-template kendoGridCellTemplate let-dataItem>
+              {{ libraries(dataItem.LibraryId)?.LibraryName }}
+            </ng-template>
+            <ng-template
+              kendoGridEditTemplate
+              let-dataItem="dataItem"
+              let-column="column"
+              let-formGroup="formGroup"
+            >
+          <kendo-dropdownlist
+            [defaultItem]="{ LibraryId: '', LibraryName: 'Choose a role type' }"
+            [data]="librariesList"
+            textField="LibraryName"
+            valueField="LibraryId"
+            [valuePrimitive]="true"
+            [formControl]="formGroup.get('LibraryId')"
+          >
+          </kendo-dropdownlist>
+        </ng-template>
+        <ng-template kendoGridFilterCellTemplate let-filter>
+            <dropdown-filter
+              [filter]="state.filter"
+              [data]="librariesList"
+              textField="LibraryName"
+              valueField="LibraryId"
+              [selectText]="selectTextLibrary"
+            >
+            </dropdown-filter>
+          </ng-template>
+        </kendo-grid-column>
+
+      <kendo-grid-command-column [width]="220">
+        <ng-template kendoGridCellTemplate>
+          <button kendoGridEditCommand>
+            <span class="k-icon k-i-edit"></span>Edit
+          </button>
+          <button kendoGridRemoveCommand>
+            <span class="k-icon k-i-close"></span>Remove
+          </button>
+        </ng-template>
+      </kendo-grid-command-column>
+    </kendo-grid>
+</div>
+<app-add-edit-user-role
+[model]="editDataItem"
+[isNew]="isNew"
+(save)="saveHandler($event)"
+(cancel)="cancelHandler()"
+[roleTypeList]="roleTypeList"
+[librariesList]="librariesList"
+>
+</app-add-edit-user-role>

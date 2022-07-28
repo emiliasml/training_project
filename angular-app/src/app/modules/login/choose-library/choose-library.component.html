@@ -1,0 +1,9 @@
+<body>
+  <h1>Choose a Library:</h1>
+  <div class="col-12">
+    <kendo-grid #libraryyGrid [selectable]="true" (selectionChange)="onClick($event)" [data]="libraryList">
+      <kendo-grid-column [field]="'LibraryName'" [title]="'Name'"></kendo-grid-column>
+      <kendo-grid-column [field]="'RoleDescription'" [title]="'Your Role'"></kendo-grid-column>
+    </kendo-grid>
+  </div>
+</body>

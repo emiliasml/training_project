@@ -1,0 +1,35 @@
+
+<kendo-dialog *ngIf="active" [width]="550" [height]="450" (close)="closeForm()">
+        <kendo-dialog-titlebar>
+          {{ isNew ? "Add new library" : "Edit a library" }}
+        </kendo-dialog-titlebar>
+      
+        <form novalidate class="k-form" [formGroup]="editForm">
+          <kendo-formfield>
+            <kendo-label [for]="LibraryName" text="Library Name"></kendo-label>
+            <input formControlName="LibraryName" kendoTextBox #LibraryName required />
+            <kendo-formhint>Type library name</kendo-formhint>
+            <kendo-formerror>Error: Library name is required</kendo-formerror>
+          </kendo-formfield>
+
+          <kendo-formfield>
+            <kendo-label [for]="Description" text="Description"></kendo-label>
+            <input formControlName="Description" kendoTextBox #Description required />
+            <kendo-formhint>Type library description</kendo-formhint>
+            <kendo-formerror>Error: Library description is required</kendo-formerror>
+          </kendo-formfield>
+        </form>
+      
+        <kendo-dialog-actions>
+          <button class="k-button" (click)="onCancel($event)">Cancel</button>
+          <button
+            class="k-button k-primary"
+            [disabled]="!editForm.valid"
+            (click)="onSave($event)"
+          >
+            Save
+          </button>
+        </kendo-dialog-actions>
+      </kendo-dialog>
+      
+

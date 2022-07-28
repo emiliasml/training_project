@@ -1,0 +1,10 @@
+DEFINE TEMP-TABLE ttAppUser NO-UNDO
+    BEFORE-TABLE bttAppUser
+    FIELD AppUserId      AS CHARACTER FORMAT "x(36)" 
+    FIELD Name   AS CHARACTER FORMAT "x(60)" 
+    FIELD UserName   AS CHARACTER FORMAT "x(20)" 
+    FIELD Password   AS CHARACTER FORMAT "x(60)" 
+    FIELD seq AS INTEGER 
+    
+    INDEX PKAppUser IS PRIMARY UNIQUE seq
+    .

@@ -1,0 +1,169 @@
+<h3>Rents</h3>
+  
+<div class="col-12">
+    <kendo-grid
+      #rentGrid
+      [pageable]="true"
+      [sortable]="true"
+      [selectable]="true"
+      [filterable]="true"
+      [data]="dataServiceData | async"
+      [pageSize]="state.take"
+      [skip]="state.skip"
+      [sort]="state.sort"
+      [filter]="state.filter"
+      [loading]="dataService?.pendingData"
+      (dataStateChange)="dataStateChange($event)"
+      (edit)="editHandler($event)"
+      (cancel)="cancelHandler()"
+
+      (remove)="removeHandler($event)"
+      (add)="addHandler()"
+      (selectionChange)="gridUserSelectionChange(rentGrid, $event)"
+    >
+      <ng-template kendoGridToolbarTemplate  *ngIf="this.auth.isAuthorized({roles:['Admin', 'Superadmin']})">
+        <button kendoGridAddCommand>
+          <h5>Add a new Rent </h5>
+        </button>
+      </ng-template>
+
+  
+      <kendo-grid-column *ngIf="!isAuthorized(['User'])" field="AppUserId" title="AppUser">
+        <ng-template kendoGridCellTemplate let-dataItem>
+              {{ appUsers(dataItem.AppUserId)?.UserName }}
+            </ng-template>
+            <ng-template
+              kendoGridEditTemplate
+              let-dataItem="dataItem"
+              let-column="column"
+              let-formGroup="formGroup"
+            >
+          <kendo-dropdownlist
+            [defaultItem]="{ AppUser: '', UserName: 'Choose a role type' }"
+            [data]="appUserList"
+            textField="UserName"
+            valueField="AppUserId"
+            [valuePrimitive]="true"
+            [formControl]="formGroup.get('AppUserId')"
+          >
+          </kendo-dropdownlist>
+        </ng-template>
+        <ng-template kendoGridFilterCellTemplate let-filter>
+            <dropdown-filter
+              [filter]="state.filter"
+              [data]="appUserList"
+              textField="UserName"
+              valueField="AppUserId"
+              [selectText]="selectTextAppUser"
+            >
+            </dropdown-filter>
+          </ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-column *ngIf="isAuthorized(['Superadmin'])"  field="LibraryAgencyId" title="Library Agency Name">
+        <ng-template kendoGridCellTemplate let-dataItem>
+              {{ libraryAgency(dataItem.LibraryAgencyId)?.LibraryAgencyName }}
+            </ng-template>
+            <ng-template
+              kendoGridEditTemplate
+              let-dataItem="dataItem"
+              let-column="column"
+              let-formGroup="formGroup"
+            >
+          <kendo-dropdownlist
+            [defaultItem]="{ LibraryAgency: '', LibraryAgencyName: 'Choose a Library Agency' }"
+            [data]="libraryAgencyList"
+            textField="LibraryAgencyName"
+            valueField="LibraryAgencyId"
+            [valuePrimitive]="true"
+            [formControl]="formGroup.get('LibraryAgencyId')"
+          >
+          </kendo-dropdownlist>
+        </ng-template>
+        <ng-template kendoGridFilterCellTemplate let-filter>
+            <dropdown-filter
+              [filter]="state.filter"
+              [data]="libraryAgencyList"
+              textField="LibraryAgencyName"
+              valueField="LibraryAgencyId"
+              [selectText]="selectTextLibraryAgency"
+            >
+            </dropdown-filter>
+          </ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-column
+        [field]="'DateFrom'"
+        [format]="'dd/MM/yyyy'"
+        [filterable]="true"
+        [filter]="'date'"
+        [sortable]="true"
+        [title]="'DateFrom'"
+        ></kendo-grid-column>
+       <kendo-grid-column
+        [field]="'DateTo'"
+        [format]="'dd/MM/yyyy'"
+        [filterable]="true"
+        [filter]="'date'"
+        [sortable]="true"
+        [title]="'DateTo'"
+        ></kendo-grid-column>
+       
+        <kendo-grid-column field="RentStatus" title="Status">
+          <ng-template kendoGridCellTemplate let-dataItem>
+                {{ rentStatus(dataItem.RentStatus)?.Name }}
+              </ng-template>
+              <ng-template
+                kendoGridEditTemplate
+                let-dataItem="dataItem"
+                let-column="column"
+                let-formGroup="formGroup"
+              >
+            <kendo-dropdownlist
+              [defaultItem]="{ RentStatus: '', Name: 'Choose a status' }"
+              [data]="statusList"
+              textField="Name"
+              valueField="RentStatus"
+              [valuePrimitive]="true"
+              [formControl]="formGroup.get('RentStatus')"
+            >
+            </kendo-dropdownlist>
+          </ng-template>
+          <ng-template kendoGridFilterCellTemplate let-filter>
+              <dropdown-filter
+                [filter]="state.filter"
+                [data]="statusList"
+                textField="Name"
+                valueField="RentStatus"
+                [selectText]="selectTextStatus"
+              >
+              </dropdown-filter>
+            </ng-template>
+        </kendo-grid-column>
+      <kendo-grid-command-column *ngIf="this.auth.isAuthorized({roles:['Admin', 'Superadmin']})" [width]="220">
+        <ng-template kendoGridCellTemplate>
+          <button kendoGridEditCommand>
+            <span class="k-icon k-i-edit"></span>Edit
+          </button>
+          <button kendoGridRemoveCommand>
+            <span class="k-icon k-i-close"></span>Remove
+          </button>
+        </ng-template>
+      </kendo-grid-command-column>
+    </kendo-grid>
+  </div>
+
+  <div *ngIf="currentRent != ''">
+    <app-rent-book-view [RentId]="currentRent"> </app-rent-book-view>
+  </div>
+
+  <app-add-edit-rent
+  [model]="editDataItem"
+  [isNew]="isNew"
+  (save)="saveHandler($event)"
+  (cancel)="cancelHandler()"
+  [appUserList]="appUserList"
+  [statusList]="statusList"
+  [libraryAgencyList]="libraryAgencyList"
+  >
+  </app-add-edit-rent>

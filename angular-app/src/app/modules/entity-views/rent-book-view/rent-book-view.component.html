@@ -1,0 +1,84 @@
+<h3>Rent Books</h3>
+
+<div class="col-12">
+    <kendo-grid #rentBookGrid
+      [pageable]="true"
+      [sortable]="true"
+      [filterable]="true"
+      [data]="dataServiceData | async"
+      [pageSize]="state.take"
+      [skip]="state.skip"
+      [sort]="state.sort"
+      [filter]="state.filter"
+      [loading]="dataService?.pendingData"
+      (dataStateChange)="dataStateChange($event)"
+      (edit)="editHandler($event)"
+      (cancel)="cancelHandler()"
+      (remove)="removeHandler($event)"
+      (add)="addHandler()"
+    >
+      <ng-template kendoGridToolbarTemplate  *ngIf="this.auth.isAuthorized({roles:['Admin', 'Superadmin']})">
+        <button kendoGridAddCommand>
+          <h5>Add a new Rent Book</h5>
+        </button>
+      </ng-template>
+
+      
+
+    <kendo-grid-column field="BookId" title="Book">
+      <ng-template kendoGridCellTemplate let-dataItem>
+            {{ book(dataItem.BookId)?.BookTitle }}
+          </ng-template>
+          <ng-template
+            kendoGridEditTemplate
+            let-dataItem="dataItem"
+            let-column="column"
+            let-formGroup="formGroup"
+          >
+        <kendo-dropdownlist
+          [defaultItem]="{ BookId: '', BookTitle: 'Choose a book' }"
+          [data]="bookList"
+          textField="BookTitle"
+          valueField="BookId"
+          [valuePrimitive]="true"
+          [formControl]="formGroup.get('BookId')"
+        >
+        </kendo-dropdownlist>
+      </ng-template>
+      <ng-template kendoGridFilterCellTemplate let-filter>
+          <dropdown-filter
+            [filter]="state.filter"
+            [data]="bookList"
+            textField="BookTitle"
+            valueField="BookId"
+            [selectText]="selectTextBooks"
+           
+          >
+          </dropdown-filter>
+        </ng-template>
+    </kendo-grid-column>
+
+
+
+
+      <kendo-grid-command-column [width]="220"  *ngIf="this.auth.isAuthorized({roles:['Admin', 'Superadmin']})">
+        <ng-template kendoGridCellTemplate>
+          <button kendoGridEditCommand>
+            <span class="k-icon k-i-edit"></span>Edit
+          </button>
+          <button kendoGridRemoveCommand>
+            <span class="k-icon k-i-close"></span>Remove
+          </button>
+        </ng-template>
+      </kendo-grid-command-column>
+    </kendo-grid>
+</div>
+
+<app-add-edit-rent-book
+[model]="editDataItem"
+[isNew]="isNew"
+(save)="saveHandler($event)"
+(cancel)="cancelHandler()"
+[bookList]="bookList"
+>
+</app-add-edit-rent-book>

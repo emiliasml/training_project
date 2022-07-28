@@ -1,0 +1,53 @@
+<kendo-dialog *ngIf="active" [width]="300" [height]="450" (close)="closeForm()">
+    <kendo-dialog-titlebar>
+        {{ isNew ? "Add new book stock " : "Edit book stock " }}
+    </kendo-dialog-titlebar>
+
+    <form novalidate class="k-form" [formGroup]="editForm">
+    
+
+    <kendo-formfield>
+        <kendo-label [for]="StockAmount" text="StockAmount"></kendo-label>
+        <kendo-numerictextbox
+        formControlName="StockAmount"
+        #StockAmount
+        required
+        ></kendo-numerictextbox>
+        <kendo-formhint>Type Stock Amount</kendo-formhint>
+        <kendo-formerror>Error: StockAmount is required</kendo-formerror>
+    </kendo-formfield>
+
+
+    <kendo-formfield>
+        <kendo-label [for]="LibraryAgencyId" text="LibraryAgencyName"></kendo-label>
+            <kendo-dropdownlist formControlName="LibraryAgencyId" #LibraryAgencyId [defaultItem]="{ LibraryAgencyId: '', LibraryAgencyName: 'Choose a Library Agency Name' }" [data]="librarieAgencyList"
+                textField="LibraryAgencyName" valueField="LibraryAgencyId" [valuePrimitive]="true" required>
+            </kendo-dropdownlist>
+        <kendo-formhint>Select Library Name</kendo-formhint>
+    </kendo-formfield> 
+
+    <kendo-formfield>
+        <kendo-label [for]="ValidFrom" text="ValidFrom"></kendo-label>
+        <kendo-datepicker formControlName="ValidFrom" [format]="format" #ValidFrom required></kendo-datepicker>
+
+        <kendo-formhint>Select Valid From</kendo-formhint>
+        <kendo-formerror>Error: Valid From is required</kendo-formerror>
+    </kendo-formfield>
+
+    <kendo-formfield>
+        <kendo-label [for]="ValidTo" text="ValidTo"></kendo-label>
+        <kendo-datepicker formControlName="ValidTo" [format]="format" #ValidTo></kendo-datepicker>
+
+        <kendo-formhint>Select Valid To</kendo-formhint>
+        <kendo-formerror>Error: Valid To is required</kendo-formerror>
+    </kendo-formfield>
+
+</form>
+
+    <kendo-dialog-actions>
+        <button class="k-button" (click)="onCancel($event)">Cancel</button>
+        <button class="k-button k-primary" [disabled]="!editForm.valid" (click)="onSave($event)">
+            Save
+        </button>
+    </kendo-dialog-actions>
+</kendo-dialog>

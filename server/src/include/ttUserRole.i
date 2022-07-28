@@ -1,0 +1,10 @@
+DEFINE TEMP-TABLE ttUserRole NO-UNDO
+    BEFORE-TABLE bttUserRole
+    FIELD UserRoleId      AS CHARACTER FORMAT "x(36)"
+    FIELD RoleTypeId      AS CHARACTER FORMAT "x(36)"
+    FIELD AppUserId      AS CHARACTER FORMAT "x(36)"
+    FIELD LibraryId      AS CHARACTER FORMAT "x(36)"
+    FIELD seq AS INTEGER 
+    
+    INDEX PKUserRole IS PRIMARY UNIQUE seq
+    .

@@ -1,0 +1,46 @@
+#collapsibleNavbar{
+    justify-content: space-between;
+    padding-left: 30px;
+    padding-right: 30px;  
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 17px;
+  
+}
+
+#libraryNavBar{
+    justify-content: space-between;
+    background-color: #e4e7eb;
+    color: #B05B3B;
+    padding-left: 30px;
+    padding-right: 30px;  
+    font-family: 'Calligraffitti';
+    height: 7%;
+}
+
+.nav-mylink, .nav-nolink{
+    padding-right: 20px; 
+    text-decoration: none;
+    color:rgb(216, 215, 214);
+}
+
+.nav-mylink:hover{
+    padding-right: 20px; 
+    text-decoration: none;
+    color: #B05B3B;
+}
+
+hr{
+    margin:0;
+}
+
+#navBar{
+    background-color: #35363a
+}
+
+h3{
+    color:#B05B3B;
+}
+
+.carousel {
+    overflow:hidden;
+}

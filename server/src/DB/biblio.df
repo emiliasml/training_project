@@ -1,0 +1,369 @@
+ADD TABLE "AppUser"
+  AREA "Schema Area"
+  DUMP-NAME "appuser"
+
+ADD FIELD "AppUserId" OF "AppUser" AS character 
+  FORMAT "x(36)"
+  INITIAL ""
+  POSITION 2
+  MAX-WIDTH 72
+  ORDER 10
+
+ADD FIELD "Name" OF "AppUser" AS character 
+  FORMAT "x(60)"
+  INITIAL ""
+  POSITION 3
+  MAX-WIDTH 120
+  ORDER 20
+
+ADD FIELD "UserName" OF "AppUser" AS character 
+  FORMAT "x(20)"
+  INITIAL ""
+  POSITION 4
+  MAX-WIDTH 40
+  ORDER 30
+
+ADD FIELD "Password" OF "AppUser" AS character 
+  FORMAT "x(60)"
+  INITIAL ""
+  POSITION 5
+  MAX-WIDTH 120
+  ORDER 40
+
+ADD INDEX "idxAppUser" ON "AppUser" 
+  AREA "Schema Area"
+  UNIQUE
+  PRIMARY
+  INDEX-FIELD "AppUserId" ASCENDING 
+
+ADD INDEX "idxUserName" ON "AppUser" 
+  AREA "Schema Area"
+  UNIQUE
+  INDEX-FIELD "UserName" ASCENDING 
+
+ADD TABLE "Book"
+  AREA "Schema Area"
+  DUMP-NAME "book"
+
+ADD FIELD "BookId" OF "Book" AS character 
+  FORMAT "x(36)"
+  INITIAL ""
+  POSITION 2
+  MAX-WIDTH 72
+  ORDER 10
+
+ADD FIELD "BookTypeId" OF "Book" AS character 
+  FORMAT "x(36)"
+  INITIAL ""
+  POSITION 3
+  MAX-WIDTH 72
+  ORDER 20
+
+ADD FIELD "Author" OF "Book" AS character 
+  FORMAT "x(60)"
+  INITIAL ""
+  POSITION 4
+  MAX-WIDTH 120
+  ORDER 30
+
+ADD FIELD "Publisher" OF "Book" AS character 
+  FORMAT "x(60)"
+  INITIAL ""
+  POSITION 5
+  MAX-WIDTH 120
+  ORDER 50
+
+ADD FIELD "BookTitle" OF "Book" AS character 
+  FORMAT "x(60)"
+  INITIAL ""
+  POSITION 6
+  MAX-WIDTH 120
+  ORDER 40
+
+ADD INDEX "idxBookId" ON "Book" 
+  AREA "Schema Area"
+  UNIQUE
+  PRIMARY
+  INDEX-FIELD "BookId" ASCENDING 
+
+ADD TABLE "BookStock"
+  AREA "Schema Area"
+  DUMP-NAME "bookstock"
+
+ADD FIELD "BookStockId" OF "BookStock" AS character 
+  FORMAT "x(36)"
+  INITIAL ""
+  POSITION 2
+  MAX-WIDTH 72
+  ORDER 10
+
+ADD FIELD "BookId" OF "BookStock" AS character 
+  FORMAT "x(36)"
+  INITIAL ""
+  POSITION 3
+  MAX-WIDTH 72
+  ORDER 20
+
+ADD FIELD "LibraryAgencyId" OF "BookStock" AS character 
+  FORMAT "x(36)"
+  INITIAL ""
+  POSITION 4
+  MAX-WIDTH 72
+  ORDER 30
+
+ADD FIELD "StockAmount" OF "BookStock" AS integer 
+  FORMAT "->,>>>,>>9"
+  INITIAL "0"
+  POSITION 5
+  MAX-WIDTH 4
+  ORDER 40
+
+ADD FIELD "ValidFrom" OF "BookStock" AS date 
+  FORMAT "99/99/9999"
+  INITIAL ?
+  POSITION 6
+  MAX-WIDTH 4
+  ORDER 50
+
+ADD FIELD "ValidTo" OF "BookStock" AS date 
+  FORMAT "99/99/9999"
+  INITIAL ?
+  POSITION 7
+  MAX-WIDTH 4
+  ORDER 60
+
+ADD INDEX "idxBookStockId" ON "BookStock" 
+  AREA "Schema Area"
+  UNIQUE
+  PRIMARY
+  INDEX-FIELD "BookStockId" ASCENDING 
+
+ADD TABLE "BookType"
+  AREA "Schema Area"
+  DUMP-NAME "booktype"
+
+ADD FIELD "BookTypeId" OF "BookType" AS character 
+  FORMAT "x(36)"
+  INITIAL ""
+  POSITION 2
+  MAX-WIDTH 72
+  ORDER 10
+
+ADD FIELD "Description" OF "BookType" AS character 
+  FORMAT "x(60)"
+  INITIAL ""
+  POSITION 3
+  MAX-WIDTH 120
+  ORDER 20
+
+ADD INDEX "idxBookTypeId" ON "BookType" 
+  AREA "Schema Area"
+  UNIQUE
+  PRIMARY
+  INDEX-FIELD "BookTypeId" ASCENDING 
+
+ADD TABLE "LibraryAgency"
+  AREA "Schema Area"
+  DUMP-NAME "libraryagency"
+
+ADD FIELD "LibraryAgencyId" OF "LibraryAgency" AS character 
+  FORMAT "x(36)"
+  INITIAL ""
+  POSITION 2
+  MAX-WIDTH 72
+  ORDER 10
+
+ADD FIELD "LibraryId" OF "LibraryAgency" AS character 
+  FORMAT "x(36)"
+  INITIAL ""
+  POSITION 3
+  MAX-WIDTH 72
+  ORDER 20
+
+ADD FIELD "Address" OF "LibraryAgency" AS character 
+  FORMAT "x(60)"
+  INITIAL ""
+  POSITION 4
+  MAX-WIDTH 120
+  ORDER 30
+
+ADD INDEX "idxLibraryAgencyId" ON "LibraryAgency" 
+  AREA "Schema Area"
+  UNIQUE
+  PRIMARY
+  INDEX-FIELD "LibraryAgencyId" ASCENDING 
+
+ADD TABLE "Libraryy"
+  AREA "Schema Area"
+  DUMP-NAME "libraryy"
+
+ADD FIELD "LibraryId" OF "Libraryy" AS character 
+  FORMAT "x(36)"
+  INITIAL ""
+  POSITION 2
+  MAX-WIDTH 72
+  ORDER 10
+
+ADD FIELD "Description" OF "Libraryy" AS character 
+  FORMAT "x(36)"
+  INITIAL ""
+  POSITION 3
+  MAX-WIDTH 72
+  ORDER 20
+
+ADD INDEX "idxLibraryId" ON "Libraryy" 
+  AREA "Schema Area"
+  UNIQUE
+  PRIMARY
+  INDEX-FIELD "LibraryId" ASCENDING 
+
+ADD TABLE "Rent"
+  AREA "Schema Area"
+  DUMP-NAME "rent"
+
+ADD FIELD "RentId" OF "Rent" AS character 
+  FORMAT "x(36)"
+  INITIAL ""
+  POSITION 2
+  MAX-WIDTH 72
+  ORDER 10
+
+ADD FIELD "AppUserId" OF "Rent" AS character 
+  FORMAT "x(36)"
+  INITIAL ""
+  POSITION 3
+  MAX-WIDTH 72
+  ORDER 20
+
+ADD FIELD "LibraryAgencyId" OF "Rent" AS character 
+  FORMAT "x(36)"
+  INITIAL ""
+  POSITION 4
+  MAX-WIDTH 72
+  ORDER 30
+
+ADD FIELD "DateFrom" OF "Rent" AS date 
+  FORMAT "99/99/9999"
+  INITIAL ?
+  POSITION 5
+  MAX-WIDTH 4
+  ORDER 40
+
+ADD FIELD "DateTo" OF "Rent" AS date 
+  FORMAT "99/99/9999"
+  INITIAL ?
+  POSITION 6
+  MAX-WIDTH 4
+  ORDER 50
+
+ADD FIELD "RentStatus" OF "Rent" AS integer 
+  FORMAT "->,>>>,>>9"
+  INITIAL "0"
+  POSITION 7
+  MAX-WIDTH 4
+  ORDER 60
+
+ADD INDEX "idxRentId" ON "Rent" 
+  AREA "Schema Area"
+  UNIQUE
+  PRIMARY
+  INDEX-FIELD "RentId" ASCENDING 
+
+ADD TABLE "RentBook"
+  AREA "Schema Area"
+  DUMP-NAME "rentbook"
+
+ADD FIELD "RentBookId" OF "RentBook" AS character 
+  FORMAT "x(36)"
+  INITIAL ""
+  POSITION 2
+  MAX-WIDTH 72
+  ORDER 10
+
+ADD FIELD "RentId" OF "RentBook" AS character 
+  FORMAT "x(36)"
+  INITIAL ""
+  POSITION 3
+  MAX-WIDTH 72
+  ORDER 20
+
+ADD FIELD "BookId" OF "RentBook" AS character 
+  FORMAT "x(36)"
+  INITIAL ""
+  POSITION 4
+  MAX-WIDTH 72
+  ORDER 30
+
+ADD INDEX "idxRentBook" ON "RentBook" 
+  AREA "Schema Area"
+  UNIQUE
+  PRIMARY
+  INDEX-FIELD "RentBookId" ASCENDING 
+
+ADD TABLE "RoleType"
+  AREA "Schema Area"
+  DUMP-NAME "roletype"
+
+ADD FIELD "RoleTypeId" OF "RoleType" AS character 
+  FORMAT "x(36)"
+  INITIAL ""
+  POSITION 2
+  MAX-WIDTH 72
+  ORDER 10
+
+ADD FIELD "Description" OF "RoleType" AS character 
+  FORMAT "x(60)"
+  INITIAL ""
+  POSITION 3
+  MAX-WIDTH 120
+  ORDER 20
+
+ADD INDEX "idxRoleTypeId" ON "RoleType" 
+  AREA "Schema Area"
+  UNIQUE
+  PRIMARY
+  INDEX-FIELD "RoleTypeId" ASCENDING 
+
+ADD TABLE "UserRole"
+  AREA "Schema Area"
+  DUMP-NAME "userrole"
+
+ADD FIELD "UserRoleId" OF "UserRole" AS character 
+  FORMAT "x(36)"
+  INITIAL ""
+  POSITION 2
+  MAX-WIDTH 72
+  ORDER 10
+
+ADD FIELD "RoleTypeId" OF "UserRole" AS character 
+  FORMAT "x(36)"
+  INITIAL ""
+  POSITION 3
+  MAX-WIDTH 72
+  ORDER 20
+
+ADD FIELD "AppUserId" OF "UserRole" AS character 
+  FORMAT "x(36)"
+  INITIAL ""
+  POSITION 4
+  MAX-WIDTH 72
+  ORDER 30
+
+ADD FIELD "LibraryId" OF "UserRole" AS character 
+  FORMAT "x(36)"
+  INITIAL ""
+  POSITION 5
+  MAX-WIDTH 72
+  ORDER 40
+
+ADD INDEX "idxUserRoleId" ON "UserRole" 
+  AREA "Schema Area"
+  UNIQUE
+  PRIMARY
+  INDEX-FIELD "UserRoleId" ASCENDING 
+
+.
+PSC
+cpstream=ISO8859-1
+.
+0000006732

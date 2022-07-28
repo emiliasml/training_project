@@ -1,0 +1,33 @@
+<kendo-dialog *ngIf="active" [width]="300" [height]="450" (close)="closeForm()">
+    <kendo-dialog-titlebar>
+        {{ isNew ? "Add new user role" : "Edit user role" }}
+    </kendo-dialog-titlebar>
+
+    <form novalidate class="k-form" [formGroup]="editForm">
+        <kendo-formfield>
+            <kendo-label [for]="RoleTypeId" text="RoleType"></kendo-label>
+            <kendo-dropdownlist formControlName="RoleTypeId" #RoleTypeId [defaultItem]="{ RoleTypeId: '', Description: 'Choose a role type' }" [data]="roleTypeList"
+                textField="Description" valueField="RoleTypeId" [valuePrimitive]="true" required>
+            </kendo-dropdownlist>
+
+            <kendo-formhint>Select Role Type</kendo-formhint>
+        </kendo-formfield>
+
+        <kendo-formfield>
+            <kendo-label [for]="LibraryId" text="Library"></kendo-label>
+            <kendo-dropdownlist formControlName="LibraryId" #LibraryId [defaultItem]="{ LibraryId: '', LibraryName: 'Choose a library' }" [data]="librariesList"
+                textField="LibraryName" valueField="LibraryId" [valuePrimitive]="true" required>
+            </kendo-dropdownlist>
+
+            <kendo-formhint>Select Library</kendo-formhint>
+        </kendo-formfield>
+
+    </form>
+
+    <kendo-dialog-actions>
+        <button class="k-button" (click)="onCancel($event)">Cancel</button>
+        <button class="k-button k-primary" [disabled]="!editForm.valid" (click)="onSave($event)">
+            Save
+        </button>
+    </kendo-dialog-actions>
+</kendo-dialog>

@@ -1,0 +1,53 @@
+<kendo-dialog *ngIf="active" [width]="550" [height]="450" (close)="closeForm()">
+    <kendo-dialog-titlebar>
+      {{ isNew ? "Add new book" : "Edit a book" }}
+    </kendo-dialog-titlebar>
+    <form novalidate class="k-form" [formGroup]="editForm">
+    <kendo-formfield>
+      <kendo-label [for]="BookTitle" text="BookTitle"></kendo-label>
+      <input formControlName="BookTitle" kendoTextBox #BookTitle required />
+
+      <kendo-formhint>Type Book title :</kendo-formhint>
+      <kendo-formerror>Error: Book title is required</kendo-formerror>
+    </kendo-formfield>
+
+    
+    <kendo-formfield>
+        <kendo-label [for]="Author" text="Author"></kendo-label>
+        <input formControlName="Author" kendoTextBox #Author required />
+    
+        <kendo-formhint>Type Author </kendo-formhint>
+        <kendo-formerror>Error: Book author is required</kendo-formerror>
+    </kendo-formfield>
+
+    <kendo-formfield>
+      <kendo-label [for]="BookTypeId" text="BookType"></kendo-label>
+      <kendo-dropdownlist formControlName="BookTypeId" #BookTypeId [defaultItem]="{ BookTypeId: '', Description: 'Choose a book type' }" [data]="bookTypeList"
+          textField="Description" valueField="BookTypeId" [valuePrimitive]="true" required>
+      </kendo-dropdownlist>
+
+      <kendo-formhint>Select Book Type</kendo-formhint>
+    </kendo-formfield>
+
+    <kendo-formfield>
+        <kendo-label [for]="Publisher" text="Publisher"></kendo-label>
+        <input formControlName="Publisher" kendoTextBox #Publisher required />
+  
+        <kendo-formhint>Type Publisher</kendo-formhint>
+        <kendo-formerror>Error: Book publisher is required</kendo-formerror>
+    </kendo-formfield>
+    </form>
+  
+    <kendo-dialog-actions>
+      <button class="k-button" (click)="onCancel($event)">Cancel</button>
+      <button
+        class="k-button k-primary"
+        [disabled]="!editForm.valid"
+        (click)="onSave($event)"
+      >
+        Save
+      </button>
+    </kendo-dialog-actions>
+  </kendo-dialog>
+  
+

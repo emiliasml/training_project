@@ -1,0 +1,30 @@
+<h3>
+  Library</h3>
+<div class="col-12">
+  <kendo-grid #libraryyGrid [pageable]="true" [sortable]="true" [selectable]="true" [filterable]="true" [data]="dataServiceData | async"
+    [pageSize]="state.take" [skip]="state.skip" [sort]="state.sort" [filter]="state.filter" [loading]="dataService?.pendingData"
+    (edit)="editHandler($event)" (remove)="removeHandler($event)" (cancel)="cancelHandler()" (add)="addHandler()" (dataStateChange)="dataStateChange($event)"
+    (selectionChange)="gridUserSelectionChange(libraryyGrid, $event)">
+    <ng-template kendoGridToolbarTemplate *ngIf="this.auth.isAuthorized({roles:['Superadmin']})">
+      <button kendoGridAddCommand>
+        <h5>Add a new library </h5>
+      </button>
+    </ng-template>
+    <kendo-grid-column [field]="'LibraryName'" [filterable]="true" [filter]="'text'" [sortable]="true" [title]="'LibraryName'"></kendo-grid-column>
+    <kendo-grid-column [field]="'Description'" [filterable]="true" [filter]="'text'" [sortable]="true" [title]="'Description'"></kendo-grid-column>
+    <kendo-grid-command-column [width]="220" *ngIf="this.auth.isAuthorized({roles:['Superadmin']})">
+      <ng-template kendoGridCellTemplate>
+        <button kendoGridEditCommand>
+          <span class="k-icon k-i-edit"></span>Edit
+        </button>
+        <button kendoGridRemoveCommand>
+          <span class="k-icon k-i-close"></span>Remove
+        </button>
+      </ng-template>
+    </kendo-grid-command-column>
+  </kendo-grid>
+</div>
+<div *ngIf="currentLibraryy != ''">
+  <app-library-agency-view [LibraryId]="currentLibraryy" [libraryName]="libraryName"> </app-library-agency-view>
+</div>
+<app-add-edit-libraryy [model]="editDataItem" [isNew]="isNew" (save)="saveHandler($event)" (cancel)="cancelHandler()"></app-add-edit-libraryy>

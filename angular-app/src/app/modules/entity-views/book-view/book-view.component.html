@@ -1,0 +1,75 @@
+<h3>Books</h3>
+
+<div class="col-12">
+    <kendo-grid #bookGrid
+    [pageable]="true" 
+    [sortable]="true" 
+    [selectable]="true" 
+    [filterable]="true" 
+    [data]="dataServiceData | async"
+    [pageSize]="state.take" 
+    [skip]="state.skip" [sort]="state.sort" [filter]="state.filter" [loading]="dataService?.pendingData"
+      (dataStateChange)="dataStateChange($event)"
+      (edit)="editHandler($event)" (remove)="removeHandler($event)" (cancel)="cancelHandler()" (add)="addHandler()" (selectionChange)="gridUserSelectionChange(bookGrid, $event)">
+      <ng-template kendoGridToolbarTemplate  *ngIf="this.auth.isAuthorized({roles:['Admin', 'Superadmin']})">
+        <button kendoGridAddCommand>
+          <h5>Add a new Book </h5>
+        </button>
+      </ng-template>
+      <kendo-grid-column [field]="'BookTitle'" [filterable]="true" [filter]="'text'" [sortable]="true" [title]="'BookTitle'"></kendo-grid-column>
+      <kendo-grid-column [field]="'Author'" [filterable]="true" [filter]="'text'" [sortable]="true" [title]="'Author'"></kendo-grid-column>
+      <kendo-grid-column [field]="'Publisher'" [filterable]="true" [filter]="'text'" [sortable]="true" [title]="'Publisher'"></kendo-grid-column>
+      <kendo-grid-column field="BookTypeId" title="BookType">
+        <ng-template kendoGridCellTemplate let-dataItem>
+              {{ bookTypes(dataItem.BookTypeId)?.Description }}
+            </ng-template>
+            <ng-template
+              kendoGridEditTemplate
+              let-dataItem="dataItem"
+              let-column="column"
+              let-formGroup="formGroup"
+            >
+          <kendo-dropdownlist
+            [defaultItem]="{ BookTypeId: '', Description: 'Choose a book type' }"
+            [data]="BookTypeList"
+            textField="Description"
+            valueField="BookTypeId"
+            [valuePrimitive]="true"
+            [formControl]="formGroup.get('BookTypeId')"
+          >
+          </kendo-dropdownlist>
+        </ng-template>
+        <ng-template kendoGridFilterCellTemplate let-filter>
+            <dropdown-filter
+              [filter]="state.filter"
+              [data]="BookTypeList"
+              textField="Description"
+              valueField="BookTypeId"
+              [selectText]="selectTextBooks"
+            >
+            </dropdown-filter>
+          </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-command-column [width]="220"  *ngIf="this.auth.isAuthorized({roles:['Admin', 'Superadmin']})">
+        <ng-template kendoGridCellTemplate>
+          <button kendoGridEditCommand>
+            <span class="k-icon k-i-edit"></span>Edit
+          </button>
+          <button kendoGridRemoveCommand>
+            <span class="k-icon k-i-close"></span>Remove
+          </button>
+        </ng-template>
+      </kendo-grid-command-column> 
+    </kendo-grid>
+  </div>
+ 
+<div *ngIf="currentBook!= ''">
+  <app-book-stock-view [BookId]="currentBook"></app-book-stock-view>
+</div>
+<app-add-edit-book
+[model]="editDataItem" [isNew]="isNew" (save)="saveHandler($event)" (cancel)="cancelHandler()" [bookTypeList]="BookTypeList"
+></app-add-edit-book>
+
+
+  
+  

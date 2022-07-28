@@ -1,0 +1,37 @@
+button{
+    margin-top: 0;
+    transition-duration: 0.4s;
+    background-color: white;
+    color: black;
+    border: 2px solid #212529;
+    width: 25%;
+    padding: 16px;
+}
+
+.twoButton{
+    width: 49.5%;
+}
+
+p{
+    margin:auto    
+}
+button:hover{
+    background-color: #212529;
+    color: white;
+}
+
+div{
+    padding-right: 15%;
+    padding-left: 15%;
+    padding-top: 5%;
+}
+
+@media(max-width: 490px){
+    button{
+        float: left;
+        margin-top: 0;
+        height: 55px;  
+        font-size: 15px;
+        padding: 2px;
+    }
+}

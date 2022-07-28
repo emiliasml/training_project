@@ -1,0 +1,28 @@
+<h3>Library Agencies</h3>
+<div class="col-12">
+  <kendo-grid #libraryAgencyGrid [pageable]="true" [sortable]="true" [filterable]="true" [data]="dataServiceData | async" [pageSize]="state.take"
+    [skip]="state.skip" [sort]="state.sort" [filter]="state.filter" [loading]="dataService?.pendingData" (dataStateChange)="dataStateChange($event)"
+    (edit)="editHandler($event)" (cancel)="cancelHandler()" (remove)="removeHandler($event)" (add)="addHandler()">
+    <ng-template kendoGridToolbarTemplate>
+      <button kendoGridAddCommand>
+        <h5>Add a new library agency</h5>
+      </button>
+    </ng-template>
+    <kendo-grid-column [field]="'LibraryAgencyName'" [filterable]="true" [filter]="'text'" [sortable]="true" [title]="'LibraryAgencyName'"></kendo-grid-column>
+    <kendo-grid-column [field]="'Address'" [filterable]="true" [filter]="'text'" [sortable]="true" [title]="'Address'"></kendo-grid-column>
+    <kendo-grid-command-column [width]="220">
+      <ng-template kendoGridCellTemplate>
+        <button kendoGridEditCommand>
+          <span class="k-icon k-i-edit"></span>Edit
+        </button>
+        <button kendoGridRemoveCommand>
+          <span class="k-icon k-i-close"></span>Remove
+        </button>
+      </ng-template>
+    </kendo-grid-command-column>
+  </kendo-grid>
+</div>
+
+<app-add-edit-library-agency [model]="editDataItem" [isNew]="isNew" (save)="saveHandler($event)" (cancel)="cancelHandler()"
+ [libraryName]="libraryName">
+</app-add-edit-library-agency>

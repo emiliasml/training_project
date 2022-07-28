@@ -1,0 +1,62 @@
+<kendo-dialog *ngIf="active" [width]="300" [height]="450" (close)="closeForm()">
+    <kendo-dialog-titlebar>
+        {{ isNew ? "Add new rent" : "Edit rent" }}
+    </kendo-dialog-titlebar>
+
+    <form novalidate class="k-form" [formGroup]="editForm">
+
+        <kendo-formfield>
+            <kendo-label [for]="AppUserId" text="AppUser"></kendo-label>
+            <kendo-dropdownlist formControlName="AppUserId" #AppUserId [defaultItem]="{ AppUserId: '', UserName: 'Choose an appUser' }"
+                [data]="appUserList" textField="UserName" valueField="AppUserId" [valuePrimitive]="true" required>
+            </kendo-dropdownlist>
+            <kendo-formhint>Select AppUser</kendo-formhint>
+        </kendo-formfield>
+
+
+
+        <kendo-formfield *ngIf="isAuthorized(['Superadmin'])">
+            <kendo-label [for]="LibraryAgencyId" text="LibraryAgencyName"></kendo-label>
+            <kendo-dropdownlist formControlName="LibraryAgencyId" #LibraryAgencyId [defaultItem]="{ LibraryAgencyId: '', LibraryAgencyName: 'Choose a library' }"
+                [data]="libraryAgencyList" textField="LibraryAgencyName" valueField="LibraryAgencyId" [valuePrimitive]="true"
+                required>
+            </kendo-dropdownlist>
+            <kendo-formhint>Select Library Agency Name</kendo-formhint>
+        </kendo-formfield>
+
+
+        <kendo-formfield>
+            <kendo-label [for]="DateFrom" text="DateFrom"></kendo-label>
+            <kendo-datepicker formControlName="DateFrom" [format]="format" #DateFrom required></kendo-datepicker>
+
+            <kendo-formhint>Type dateFrom</kendo-formhint>
+            <kendo-formerror>Error: DateFrom is required</kendo-formerror>
+        </kendo-formfield>
+        <kendo-formfield>
+            <kendo-label [for]="DateTo" text="DateTo"></kendo-label>
+            <kendo-datepicker formControlName="DateTo" [format]="format" #DateTo required></kendo-datepicker>
+
+            <kendo-formhint>Type dateTo</kendo-formhint>
+            <kendo-formerror>Error: DateTo is required</kendo-formerror>
+        </kendo-formfield>
+
+
+
+        <kendo-formfield *ngIf="!isNew">
+            <kendo-label [for]="RentStatus" text="Status"></kendo-label>
+            <kendo-dropdownlist  formControlName="RentStatus" #RentStatus [defaultItem]="{ RentStatus: '', Name: 'Choose a status' }"
+                [data]="statusList" textField="Name" valueField="RentStatus" [valuePrimitive]="true" required>
+            </kendo-dropdownlist>
+            <kendo-formhint>Select Status</kendo-formhint>
+        </kendo-formfield>
+
+
+    </form>
+
+    <kendo-dialog-actions>
+        <button class="k-button" (click)="onCancel($event)">Cancel</button>
+        <button class="k-button k-primary" [disabled]="!editForm.valid" (click)="onSave($event)">
+            Save
+        </button>
+    </kendo-dialog-actions>
+</kendo-dialog>

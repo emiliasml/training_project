@@ -1,0 +1,30 @@
+<h3>Book types</h3>
+
+<div class="col-12">
+  <kendo-grid #bookTypeGrid [pageable]="true" [sortable]="true" [selectable]="true" [filterable]="true" [data]="dataServiceData | async"
+    [pageSize]="state.take" [skip]="state.skip" [sort]="state.sort" [filter]="state.filter" [loading]="dataService?.pendingData"
+    (dataStateChange)="dataStateChange($event)"
+    (edit)="editHandler($event)" (remove)="removeHandler($event)" (cancel)="cancelHandler()" (add)="addHandler()" (selectionChange)="gridUserSelectionChange(bookTypeGrid, $event)">
+    <ng-template kendoGridToolbarTemplate>
+      <button kendoGridAddCommand>
+        <h5>Add a new Book Type </h5>
+      </button>
+    </ng-template>
+    <kendo-grid-column [field]="'Description'" [filterable]="true" [filter]="'text'" [sortable]="true" [title]="'Description'"></kendo-grid-column>
+    <kendo-grid-command-column [width]="220">
+      <ng-template kendoGridCellTemplate>
+        <button kendoGridEditCommand>
+          <span class="k-icon k-i-edit"></span>Edit
+        </button>
+        <button kendoGridRemoveCommand>
+          <span class="k-icon k-i-close"></span>Remove
+        </button>
+      </ng-template>
+    </kendo-grid-command-column> 
+  </kendo-grid>
+</div>
+<app-add-edit-book-type
+[model]="editDataItem" [isNew]="isNew" (save)="saveHandler($event)" (cancel)="cancelHandler()"
+></app-add-edit-book-type>
+
+

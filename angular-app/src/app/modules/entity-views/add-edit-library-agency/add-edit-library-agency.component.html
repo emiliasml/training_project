@@ -1,0 +1,32 @@
+<kendo-dialog *ngIf="active" [width]="500" [height]="600" (close)="closeForm()">
+    <kendo-dialog-titlebar>
+            {{ isNew ? "Add new library agency for " + libraryName : "Edit library agency for " + libraryName }} 
+    </kendo-dialog-titlebar>
+
+    <form novalidate class="k-form" [formGroup]="editForm">
+
+        <kendo-formfield>
+            <kendo-label [for]="LibraryAgencyName" text="LibraryAgencyName"></kendo-label>
+            <input formControlName="LibraryAgencyName" kendoTextBox #LibraryAgencyName required />
+
+            <kendo-formhint>Type the name of the agency</kendo-formhint>
+            <kendo-formerror>Error: Agency name is required</kendo-formerror>
+        </kendo-formfield>
+
+        <kendo-formfield>
+            <kendo-label [for]="Address" text="Address"></kendo-label>
+            <input formControlName="Address" kendoTextBox #Address required />
+
+            <kendo-formhint>Type address</kendo-formhint>
+            <kendo-formerror>Error: Library address is required</kendo-formerror>
+        </kendo-formfield>
+
+    </form>
+
+    <kendo-dialog-actions>
+        <button class="k-button" (click)="onCancel($event)">Cancel</button>
+        <button class="k-button k-primary" [disabled]="!editForm.valid" (click)="onSave($event)">
+            Save
+        </button>
+    </kendo-dialog-actions>
+</kendo-dialog>

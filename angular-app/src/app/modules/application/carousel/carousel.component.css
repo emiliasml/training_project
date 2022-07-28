@@ -1,0 +1,16 @@
+#divCarousel{
+    background-color: black;
+    height: 80vh;
+    position: relative;
+    z-index: 1 ;
+}
+
+#footer{
+    height: 15%;
+    background: rgb(0,0,0);
+    background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(52,57,62,1) 100%);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    color: white;
+}
